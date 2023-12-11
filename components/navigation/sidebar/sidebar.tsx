@@ -3,11 +3,10 @@ import { cn } from "@/app/lib/utils";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
 import { ScrollItems } from "./scroll-items";
-
-export const revalidate = 1;
+import { baseUrl } from "@/app/lib/site";
 
 const Sidebar = async ({ className }: { className?: string }) => {
-  const navItems = await fetch("http://localhost:3000/api/blocks", {
+  const navItems = await fetch(`${baseUrl}/api/blocks`, {
     next: {
       tags: ["blocks"],
     },

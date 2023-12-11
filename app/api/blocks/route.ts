@@ -1,5 +1,4 @@
 import { db } from "@/app/lib/db";
-import { revalidate } from "@/components/navigation/sidebar/sidebar";
 import { revalidateTag } from "next/cache";
 import { NextResponse, NextRequest } from "next/server";
 import slugify from "slugify";
