@@ -30,8 +30,6 @@ export async function POST(req: Request) {
       },
     });
 
-    revalidateTag("blocks");
-
     return NextResponse.json({
       block,
       statusCode: 201,

@@ -5,6 +5,7 @@ import { Header } from "@/components/navigation/header/header";
 import "./globals.css";
 import Sidebar from "@/components/navigation/sidebar/sidebar";
 import { ModalProvider } from "@/components/providers/modal-provider";
+export const dynamic = "force-dynamic";
 
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
