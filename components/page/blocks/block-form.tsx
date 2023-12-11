@@ -4,7 +4,6 @@ import axios from "axios";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
 import {
@@ -39,10 +38,9 @@ export const AddBlockForm = () => {
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      const result = await axios.post("/api/blocks", values);
-      form.reset();
+      await axios.post("/api/blocks", values);
       router.refresh();
-      console.log(result.status);
+      form.reset();
     } catch (error) {
       console.log(error);
     }

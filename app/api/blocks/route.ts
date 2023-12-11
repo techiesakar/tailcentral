@@ -1,15 +1,14 @@
-import { PrismaClient } from "@prisma/client";
-
+import { db } from "@/app/lib/db";
 import { NextResponse, NextRequest } from "next/server";
-export const dynamic = "force-dynamic"; // defaults to force-static
+import slugify from "slugify";
 
-const prisma = new PrismaClient();
 export async function POST(req: Request) {
   try {
     const { title: name } = await req.json();
-    console.log(name);
 
-    const isBlockExist = await prisma.block.findUnique({
+    const slug_name = slugify(name);
+
+    const isBlockExist = await db.block.findUnique({
       where: {
         title: name,
       },
@@ -23,9 +22,10 @@ export async function POST(req: Request) {
       });
     }
 
-    const block = await prisma.block.create({
+    const block = await db.block.create({
       data: {
         title: name,
+        slug: slug_name,
       },
     });
 
@@ -41,9 +41,8 @@ export async function POST(req: Request) {
 }
 
 export async function GET(req: NextRequest) {
-  // const queryString = req.nextUrl.searchParams.get("b");
   try {
-    const blocks = await prisma.block.findMany({
+    const blocks = await db.block.findMany({
       include: {
         components: {
           select: {

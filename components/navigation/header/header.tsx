@@ -1,13 +1,19 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import Logo from "@/public/logo.svg";
+"use client";
+import { usePathname } from "next/navigation";
+import { ActionButton } from "./header-action-button";
 
 export const Header = () => {
+  const pathName = usePathname();
+
+  const slugTitle = pathName.split("/").pop();
+  const formattedTitle = slugTitle?.split("-").join(" ");
   return (
-    <header className="p-3">
-      <div className="bg-gray-100 h-14 rounded-xl flex justify-between items-center">
-        <h1>Header</h1>
+    <header className="">
+      <div className="bg-gray-100 px-6 h-16 rounded-xl flex justify-between items-center">
+        <h1 className="text-lg capitalize">{formattedTitle || "Blocks"}</h1>
+        <div>
+          <ActionButton />
+        </div>
       </div>
     </header>
   );

@@ -3,8 +3,10 @@ import { cn } from "@/app/lib/utils";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
 import { ScrollItems } from "./scroll-items";
+import { getAllBlocks } from "@/app/lib/data";
 
-export const Sidebar = ({ className }: { className?: string }) => {
+const Sidebar = async ({ className }: { className?: string }) => {
+  const navItems = await getAllBlocks();
   return (
     <aside
       className={cn(
@@ -12,7 +14,7 @@ export const Sidebar = ({ className }: { className?: string }) => {
         className
       )}
     >
-      <header>
+      <header className="h-16">
         <Link href="/">
           <Image
             src={Logo}
@@ -24,7 +26,9 @@ export const Sidebar = ({ className }: { className?: string }) => {
           />
         </Link>
       </header>
-      <ScrollItems />
+      <ScrollItems navItems={navItems} />
     </aside>
   );
 };
+
+export default Sidebar;
