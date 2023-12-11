@@ -1,8 +1,7 @@
 "use server";
-import { cache } from "react";
 import { db } from "./db";
 
-export const getAllBlocks = cache(async () => {
+export const getAllBlocks = async () => {
   const allBlocks = await db.block.findMany({
     include: {
       components: {
@@ -13,4 +12,4 @@ export const getAllBlocks = cache(async () => {
     },
   });
   return allBlocks;
-});
+};
