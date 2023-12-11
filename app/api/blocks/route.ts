@@ -1,4 +1,6 @@
 import { db } from "@/app/lib/db";
+import { revalidate } from "@/components/navigation/sidebar/sidebar";
+import { revalidateTag } from "next/cache";
 import { NextResponse, NextRequest } from "next/server";
 import slugify from "slugify";
 
@@ -29,6 +31,8 @@ export async function POST(req: Request) {
       },
     });
 
+    revalidateTag("blocks");
+
     return NextResponse.json({
       block,
       statusCode: 201,
@@ -42,7 +46,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: NextRequest) {
   try {
-    const blocks = await db.block.findMany({
+    const result = await db.block.findMany({
       include: {
         components: {
           select: {
@@ -52,12 +56,12 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    if (!blocks) {
+    if (!result) {
       return NextResponse.json([]);
     }
 
     return NextResponse.json({
-      blocks,
+      result,
       statusCode: 201,
       status: "success",
     });

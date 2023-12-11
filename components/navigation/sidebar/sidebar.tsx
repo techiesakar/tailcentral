@@ -3,10 +3,17 @@ import { cn } from "@/app/lib/utils";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
 import { ScrollItems } from "./scroll-items";
-import { getAllBlocks } from "@/app/lib/data";
+
+export const revalidate = 1;
 
 const Sidebar = async ({ className }: { className?: string }) => {
-  const navItems = await getAllBlocks();
+  const navItems = await fetch("http://localhost:3000/api/blocks", {
+    next: {
+      tags: ["blocks"],
+    },
+  });
+
+  const products = await navItems.json();
   return (
     <aside
       className={cn(
@@ -26,7 +33,7 @@ const Sidebar = async ({ className }: { className?: string }) => {
           />
         </Link>
       </header>
-      <ScrollItems navItems={navItems} />
+      <ScrollItems navItems={products.result} />
     </aside>
   );
 };
