@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Component {
+  id         Int      @id @default(autoincrement())
+  title      String
+  code       String   @db.Text
+  blackThumb String
+  lightThumb String
+  htmlCode   String   @db.Text
+  jsxCode    String   @db.Text
+  block      Block    @relation(fields: [blockId], references: [id])
+  blockId    Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Block {
+  id         Int         @id @default(autoincrement())
+  title      String      @unique
+  components Component[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
