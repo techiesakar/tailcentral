@@ -4,7 +4,6 @@ import axios from "axios";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addBlock } from "@/app/lib/actions";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -21,7 +20,6 @@ import { Button } from "@/components/ui/button";
 
 export const AddBlockForm = () => {
   const router = useRouter();
-  const { toast } = useToast();
 
   const FormSchema = z.object({
     title: z
