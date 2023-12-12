@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { cn } from "@/app/lib/utils";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
+
+import { cn } from "@/app/lib/utils";
+import client from "@/app/utils/db";
+
 import { ScrollItems } from "./scroll-items";
-import { db } from "@/app/lib/db";
 
 const Sidebar = async ({ className }: { className?: string }) => {
-  const navItems = await db.block.findMany({
+  const navItems = await client.block.findMany({
     include: {
       components: {
         select: {

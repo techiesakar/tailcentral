@@ -1,19 +1,17 @@
-"use client";
-import { usePathname } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/utils/auth";
+
 import { ActionButton } from "./header-action-button";
+import { HeaderTitle } from "./header-title";
 
-export const Header = () => {
-  const pathName = usePathname();
+export const Header = async () => {
+  const session = await getServerSession(authOptions);
 
-  const slugTitle = pathName.split("/").pop();
-  const formattedTitle = slugTitle?.split("-").join(" ");
   return (
     <header className="">
       <div className="bg-gray-100 px-6 h-16 rounded-xl flex justify-between items-center">
-        <h1 className="text-lg capitalize">{formattedTitle || "Blocks"}</h1>
-        <div>
-          <ActionButton />
-        </div>
+        <HeaderTitle />
+        <div>{session && <ActionButton />}</div>
       </div>
     </header>
   );

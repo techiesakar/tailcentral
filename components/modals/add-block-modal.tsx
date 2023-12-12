@@ -108,7 +108,7 @@ const AddBlockModal = () => {
                       />
                     </FormControl>
                     <FormMessage>
-                      {form.formState.errors.title?.message || message || null}
+                      {form.formState.errors.title?.message || message}
                     </FormMessage>
                   </FormItem>
                 )}

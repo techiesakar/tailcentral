@@ -1,11 +1,12 @@
 "use client";
+import Link from "next/link";
 import { useMemo, useState } from "react";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
+
 export const ScrollItems = ({ navItems }: any) => {
   const [queryString, setQueryString] = useState("");
-
   const filteredItems = useMemo(() => {
     const lowercaseInput = queryString.toLowerCase();
     return navItems.filter((item: any) =>

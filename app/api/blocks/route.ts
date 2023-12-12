@@ -1,5 +1,4 @@
-import { db } from "@/app/lib/db";
-import { revalidateTag } from "next/cache";
+import client from "@/app/utils/db";
 import { NextResponse, NextRequest } from "next/server";
 import slugify from "slugify";
 
@@ -9,7 +8,7 @@ export async function POST(req: Request) {
 
     const slug_name = slugify(name);
 
-    const isBlockExist = await db.block.findUnique({
+    const isBlockExist = await client.block.findUnique({
       where: {
         title: name,
       },
@@ -23,7 +22,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const block = await db.block.create({
+    const block = await client.block.create({
       data: {
         title: name,
         slug: slug_name,
@@ -32,33 +31,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       block,
-      statusCode: 201,
-      status: "success",
-    });
-  } catch (error) {
-    console.error("[Block_POST]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
-  }
-}
-
-export async function GET(req: NextRequest) {
-  try {
-    const result = await db.block.findMany({
-      include: {
-        components: {
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-
-    if (!result) {
-      return NextResponse.json([]);
-    }
-
-    return NextResponse.json({
-      result,
       statusCode: 201,
       status: "success",
     });
