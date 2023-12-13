@@ -2,10 +2,9 @@ import type { NextAuthOptions } from "next-auth";
 
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-import { GithubProfile } from "next-auth/providers/github";
 
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import client from "./db";
+import client from "@/app/utils/db";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(client),
@@ -20,4 +19,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
 };

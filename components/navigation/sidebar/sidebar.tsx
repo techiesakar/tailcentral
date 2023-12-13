@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
 
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import client from "@/app/utils/db";
 
 import { ScrollItems } from "./scroll-items";
