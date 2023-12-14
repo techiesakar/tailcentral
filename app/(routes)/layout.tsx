@@ -1,7 +1,7 @@
 import { Header } from "@/components/navigation/header/header";
 import Sidebar from "@/components/navigation/sidebar/sidebar";
 
-const BlockLayout = ({ children }: { children: React.ReactNode }) => {
+const BlockLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Sidebar className="w-[260px]" />

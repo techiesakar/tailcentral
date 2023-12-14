@@ -1,5 +1,6 @@
 "use client";
 import { z } from "zod";
+import axios from "axios";
 import { useModal } from "@/hooks/use-modal-store";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -26,8 +27,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { createBlock } from "@/app/action";
-import { BlockSchema } from "@/types/schema";
 
 const AddBlockModal = () => {
   const router = useRouter();
@@ -36,17 +35,26 @@ const AddBlockModal = () => {
   const isModalOpen = isOpen && type === "addBlock";
   const [message, setMessage] = useState("");
 
-  const form = useForm<z.infer<typeof BlockSchema>>({
-    resolver: zodResolver(BlockSchema),
+  const FormSchema = z.object({
+    title: z
+      .string()
+      .min(3, {
+        message: "Block must be at least 2 characters",
+      })
+      .max(20),
+  });
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
       title: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof BlockSchema>) => {
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      const result = await createBlock(values);
-      setMessage(result.message);
+      const res = await axios.post("/api/blocks", values);
+      setMessage(res.data.message);
       handleClose();
       router.refresh();
     } catch (error) {

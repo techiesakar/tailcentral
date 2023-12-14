@@ -1,13 +1,17 @@
-"use client";
 import { Button } from "@/components/ui/button";
-import { FaGoogle, FaGithub } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
-import React from "react";
-import { signIn } from "next-auth/react";
+import { signIn } from "@/auth";
+
 const Providers = [
   {
     name: "github",
     icon: FaGithub,
+  },
+
+  {
+    name: "google",
+    icon: FaGoogle,
   },
 ];
 
@@ -17,17 +21,25 @@ const ProviderLogin = () => {
       {Providers.map((provider) => {
         const Icon = provider.icon;
         return (
-          <Button
-            onClick={() => signIn(provider.name)}
+          <form
             key={provider.name}
-            variant="outline"
-            type="submit"
-            size="lg"
-            className="w-full capitalize  font-light"
+            action={async () => {
+              "use server";
+              await signIn(provider.name, {
+                callbackUrl: "/",
+              });
+            }}
           >
-            <Icon className="mr-2 h-4 w-4" />
-            Continue with {provider.name}
-          </Button>
+            <Button
+              variant="outline"
+              type="submit"
+              size="lg"
+              className="w-full capitalize  font-light"
+            >
+              <Icon className="mr-2 h-4 w-4" />
+              Continue with {provider.name}
+            </Button>
+          </form>
         );
       })}
     </div>

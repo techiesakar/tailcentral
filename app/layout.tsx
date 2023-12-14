@@ -5,7 +5,8 @@ import "./globals.css";
 
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
-export const dynamic = "force-dynamic";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const poppins = Nunito_Sans({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
@@ -19,20 +20,20 @@ export const metadata: Metadata = {
   description: "Free Tailwind Components Library",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <NextAuthProvider>
+        <SessionProvider session={session}>
           {children}
           <ModalProvider />
-
           <Toaster />
-        </NextAuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );

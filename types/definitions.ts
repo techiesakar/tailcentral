@@ -4,3 +4,15 @@ export type NavItemsType = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type CustomUser = {
+  id?: string | null;
+  name?: string | null;
+  email?: string | null;
+  role?: string | null;
+};
+
+export type BlockType = {
+  id?: string | null;
+  title: string;
+};

@@ -7,12 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum RoleType {
-  GUEST
-  ADMIN
-  SUBSCRIBER
-}
-
 model Component {
   id         Int      @id @default(autoincrement())
   title      String
@@ -49,7 +43,7 @@ model Account {
   scope                    String?
   id_token                 String? @db.Text
   session_state            String?
-  refresh_token_expires_in Int?
+  refresh_token_expires_in String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -65,14 +59,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  password      String?
+  id       String  @id @default(cuid())
+  name     String?
+  email    String? @unique
+  password String?
+  role     String? @default("GUEST")
+
   emailVerified DateTime?
   image         String?
-  role          String?   @default("GUEST")
-  provider      String?
   accounts      Account[]
   sessions      Session[]
 }
