@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum RoleType {
+  GUEST
+  ADMIN
+  SUBSCRIBER
+}
+
 model Component {
   id         Int      @id @default(autoincrement())
   title      String
@@ -65,7 +71,8 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
-  role          String?   @default("user")
+  role          String?   @default("GUEST")
+  provider      String?
   accounts      Account[]
   sessions      Session[]
 }

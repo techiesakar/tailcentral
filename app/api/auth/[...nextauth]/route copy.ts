@@ -9,6 +9,13 @@ import bcryptjs from "bcryptjs";
 
 import { NextAuthOptions, User as IUser } from "next-auth";
 
+interface ICustomDataOfUser extends IUser {
+  role: string | null | undefined;
+  active: boolean;
+  is_admin: boolean;
+  provider: string;
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(client),
   pages: {
@@ -114,14 +121,11 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, account }) {
       if (account) {
         token.accessToken = account?.access_token;
-        token.id = user.id;
       }
       let customData;
       if (user) {
         token.id = user?.id;
-        token.uid = user.id;
-
-        const userNewData = user;
+        const userNewData = user as ICustomDataOfUser;
 
         if (!userNewData?.provider && user.email != null) {
           const existUser = await client.user.findUnique({
@@ -134,7 +138,7 @@ export const authOptions: NextAuthOptions = {
             name: existUser?.name,
             email: existUser?.email,
             image: existUser?.image,
-            role: "GUEST",
+            role: existUser?.role,
           };
         } else {
           customData = {
@@ -148,8 +152,17 @@ export const authOptions: NextAuthOptions = {
       }
       return { ...token, ...customData };
     },
-    async session({ session, token, user }) {
-      session.user = token;
+    async session({ session, token }) {
+      if (
+        typeof token.role === "string" ||
+        token.role === null ||
+        token.role === undefined
+      ) {
+        session.user = {
+          ...session.user,
+          role: token.role,
+        };
+      }
       return session;
     },
   },
