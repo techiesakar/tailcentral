@@ -4,7 +4,7 @@ import Logo from "@/public/logo.svg";
 
 import client from "@/app/utils/db";
 
-import { ScrollItems } from "./scroll-items";
+import { ScrollItems } from "./public-scroll-items";
 
 const Sidebar = async ({ className }: { className?: string }) => {
   const navItems = await client.block.findMany({

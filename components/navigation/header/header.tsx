@@ -11,11 +11,11 @@ export const Header = async () => {
   return (
     <header className="bg-gray-100 px-6 h-16 rounded-xl flex justify-between items-center">
       <HeaderTitle />
-      <div className="flex gap-3">
+      <div className="flex gap-3  items-center">
         {session && <LogoutButton />}
         {isAdmin && <ActionButton />}
+        <MenuToggleButton />
       </div>
-      <MenuToggleButton />
     </header>
   );
 };

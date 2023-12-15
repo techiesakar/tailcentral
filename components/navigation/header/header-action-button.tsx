@@ -6,6 +6,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useModal } from "@/hooks/use-modal-store";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export const ActionButton = () => {
   const { onOpen } = useModal();
@@ -13,18 +15,19 @@ export const ActionButton = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="default"> Add +</Button>
+        <Plus className="text-gray-500 hover:bg-slate-300 transition-all duration-200 p-2 h-10  w-10 bg-slate-200 rounded-full  cursor-pointer" />
       </PopoverTrigger>
-      <PopoverContent className="mr-2 mt-2 text-sm flex flex-col p-0 transition-all">
+      <PopoverContent className="mr-2 mt-2  flex flex-col p-0 transition-all">
         <div
           className="px-4 pt-4 hover:text-sky-600 cursor-pointer"
           onClick={() => onOpen("addBlock")}
         >
           Add Block
         </div>
+
         <div
           className="px-4 py-4 hover:text-sky-600 cursor-pointer"
-          onClick={() => onOpen("addBlock")}
+          onClick={() => onOpen("addComponent")}
         >
           Add Component
         </div>
