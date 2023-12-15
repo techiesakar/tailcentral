@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
 
-import { cn } from "@/lib/utils";
 import client from "@/app/utils/db";
 
 import { ScrollItems } from "./scroll-items";
@@ -19,26 +18,21 @@ const Sidebar = async ({ className }: { className?: string }) => {
   });
 
   return (
-    <aside
-      className={cn(
-        "fixed inset-y-0 h-screen flex flex-col left-0 border-r",
-        className
-      )}
-    >
-      <header className="h-16">
-        <Link href="/">
+    <>
+      <header className=" bg-gray-100 flex ">
+        <Link href="/" className="h-16 flex">
           <Image
             src={Logo}
-            height={60}
+            height={64}
             width={180}
             priority
             alt=""
-            className=" px-3 py-3"
+            className="px-3 "
           />
         </Link>
       </header>
       <ScrollItems navItems={navItems} />
-    </aside>
+    </>
   );
 };
 

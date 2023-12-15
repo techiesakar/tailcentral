@@ -1,7 +1,7 @@
 import React from "react";
 
 const HomePage = async () => {
-  return <div>HomePage</div>;
+  return <></>;
 };
 
 export default HomePage;

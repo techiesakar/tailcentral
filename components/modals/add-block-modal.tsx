@@ -25,7 +25,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "@/components/ui/form";
 import { createBlock } from "@/app/action";
 import { BlockSchema } from "@/types/schema";
 
