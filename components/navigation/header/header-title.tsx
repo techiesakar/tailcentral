@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 
 export const HeaderTitle = () => {
   const pathName = usePathname();
+  console.log(pathName);
   const slugTitle = pathName.split("/").pop();
   const formattedTitle = slugTitle?.split("-").join(" ");
 
