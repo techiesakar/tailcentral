@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@/auth";
-import { BlockType } from "@/types/definitions";
+import { BlockType, ComponentType } from "@/types/definitions";
 import { z } from "zod";
 import slugify from "slugify";
 import client from "./utils/db";
@@ -21,12 +21,32 @@ const BlockSchema = z.object({
     .max(20),
 });
 
-export type BlockState = {
-  errors?: {
-    title?: string[];
-  };
-  message?: string | null;
-};
+const ComponentSchema = z.object({
+  blockId: z.string(),
+  title: z
+    .string()
+    .min(3, {
+      message: "Block must be at least 2 characters",
+    })
+    .max(20),
+
+  code: z.string(),
+});
+export async function findAllBlocks() {
+  try {
+    const navItems = await client.block.findMany({
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+      },
+    });
+    return navItems;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch invoice.");
+  }
+}
 
 export async function createBlock(values: BlockType) {
   try {
@@ -62,6 +82,35 @@ export async function createBlock(values: BlockType) {
       result,
     };
   } catch (error) {
+    console.log(error);
+    return {
+      status: 500,
+      message: `Something went wrong`,
+    };
+  }
+}
+
+/**
+ * Create Components
+ */
+export async function createComponent(values: ComponentType) {
+  try {
+    const isAdmin = await findAdmin();
+    if (!isAdmin) {
+      throw new Error("Only Admin can Create Block");
+    }
+    const validatedData = ComponentSchema.parse(values);
+    const { blockId, ...componentData } = validatedData;
+    console.log(blockId);
+    const result = await client.component.create({
+      data: {
+        ...componentData,
+        block: { connect: { id: blockId } },
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
     return {
       status: 500,
       message: `Something went wrong`,

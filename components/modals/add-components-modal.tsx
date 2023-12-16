@@ -1,7 +1,7 @@
 "use client";
 import { z } from "zod";
 import { useModal } from "@/hooks/use-modal-store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 import { Button } from "../ui/button";
@@ -26,28 +25,50 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createBlock } from "@/app/action";
-import { BlockSchema } from "@/types/schema";
-
+import { createBlock, createComponent, findAllBlocks } from "@/app/action";
+import { ComponentSchema } from "@/types/schema";
+import { Textarea } from "../ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+type BlockItemType = {
+  id: string;
+  title: string;
+  slug: string;
+};
 const AddComponentModal = () => {
   const router = useRouter();
-
+  const [allBlocks, setAllBlocks] = useState<BlockItemType[]>([]);
   const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "addComponent";
   const [message, setMessage] = useState("");
+  useEffect(() => {
+    const fetchAllBlocks = async () => {
+      const navItems = await findAllBlocks();
+      setAllBlocks(navItems);
+    };
+    fetchAllBlocks();
+  }, []);
 
-  const form = useForm<z.infer<typeof BlockSchema>>({
-    resolver: zodResolver(BlockSchema),
+  const form = useForm<z.infer<typeof ComponentSchema>>({
+    resolver: zodResolver(ComponentSchema),
     defaultValues: {
       title: "",
+      code: "",
+      blockId: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof BlockSchema>) => {
+  const onSubmit = async (values: z.infer<typeof ComponentSchema>) => {
     try {
-      const result = await createBlock(values);
-      setMessage(result.message);
-      handleClose();
+      await createComponent(values);
+      // handleClose();
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -95,10 +116,67 @@ const AddComponentModal = () => {
                           handleInputChange();
                         }}
                       />
+                    </FormControl>{" "}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="blockId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Block</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-[280px]">
+                          <SelectValue
+                            placeholder="Select a Block"
+                            className="capitalize"
+                          />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Blocks</SelectLabel>
+
+                            {allBlocks.map((item) => (
+                              <SelectItem
+                                key={item.id}
+                                value={item.id}
+                                className="capitalize"
+                              >
+                                {item.title}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.title?.message || message}
-                    </FormMessage>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Code</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        className="min-h-[400px]"
+                        placeholder="Component Name"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          handleInputChange();
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
