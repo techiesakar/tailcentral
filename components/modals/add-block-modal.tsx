@@ -45,6 +45,7 @@ const AddBlockModal = () => {
 
   const onSubmit = async (values: z.infer<typeof BlockSchema>) => {
     try {
+      console.log(values);
       const result = await createBlock(values);
       setMessage(result.message);
       handleClose();
@@ -99,9 +100,7 @@ const AddBlockModal = () => {
                         }}
                       />
                     </FormControl>
-                    <FormMessage>
-                      {form.formState.errors.title?.message || message}
-                    </FormMessage>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

@@ -2,11 +2,11 @@ import React from "react";
 
 type ParamsType = {
   params: {
-    slug: string;
+    blockId: string;
   };
 };
 const SingleBlockPage = ({ params }: ParamsType) => {
-  const splitted = params.slug.split("-").join(" ");
+  const splitted = params.blockId.split("-").join(" ");
 
   return <div>{splitted}</div>;
 };
