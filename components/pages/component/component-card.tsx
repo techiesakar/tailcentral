@@ -40,10 +40,9 @@ export const ComponentCard = ({ card }: BlockProps) => {
 
       <div className="bottom border-x-0 border-b-0 bg-white flex items-center justify-end border h-14">
         <Eye className="h-14 border-l text-gray-400 cursor-pointer hover:text-indigo-500 transition-all duration-300 w-14  p-4" />
-        <Code
-          onClick={() => router.push(`/b/Banner/` + card.id)}
-          className="h-14 border-l text-gray-400 cursor-pointer  hover:text-indigo-500 transition-all duration-300 w-14  p-4"
-        />
+        <Link href={`/b/Banner/` + card.id}>
+          <Code className="h-14 border-l text-gray-400 cursor-pointer  hover:text-indigo-500 transition-all duration-300 w-14  p-4" />
+        </Link>
         {copied ? (
           <Check className="h-14 border-l text-gray-400 cursor-pointer  hover:text-indigo-500 transition-all duration-300 w-14  p-4" />
         ) : (
