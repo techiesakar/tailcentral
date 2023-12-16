@@ -16,3 +16,9 @@ export type BlockType = {
   id?: string | null;
   title: string;
 };
+
+export type ComponentType = {
+  title: string;
+  code: string;
+  blockId: string;
+};

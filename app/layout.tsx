@@ -4,10 +4,10 @@ import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 
 import { ModalProvider } from "@/components/providers/modal-provider";
-import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-
+import MenuContextProvider from "@/components/providers/menu-context";
+export const dynamic = "force-dynamic";
 const poppins = Nunito_Sans({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
@@ -30,9 +30,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <SessionProvider session={session}>
-          {children}
-          <ModalProvider />
-          <Toaster />
+          <MenuContextProvider>
+            {children}
+            <ModalProvider />
+            <Toaster />
+          </MenuContextProvider>
         </SessionProvider>
       </body>
     </html>
