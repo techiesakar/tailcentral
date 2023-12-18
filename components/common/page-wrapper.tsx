@@ -14,7 +14,7 @@ const PageWrapper = ({ sidebar, header, children }: PageWrapper) => {
     <>
       <aside
         className={cn(
-          "fixed inset-y-0 w-[260px] bg-gray-50 h-screen flex flex-col ease-in-out transition-all duration-200 md:left-0 border-r -left-full",
+          "fixed inset-y-0 w-[260px] bg-gray-50 z-50 h-screen flex flex-col ease-in-out transition-all duration-200 md:left-0 border-r -left-full",
           isOpen && "left-0"
         )}
       >
@@ -28,7 +28,7 @@ const PageWrapper = ({ sidebar, header, children }: PageWrapper) => {
         )}
       >
         {header}
-        <main className="flex-1 p-6 border border-gray-300 border-l-0">
+        <main className="flex-1 border border-gray-300 border-l-0">
           {children}
         </main>
       </div>

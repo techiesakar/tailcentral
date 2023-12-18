@@ -1,4 +1,4 @@
-import ComponentsGallery from "@/components/skeleton/components-gallery";
+import { ComponentsGallery } from "@/components/skeleton/components-gallery";
 import React from "react";
 
 const BlockLoading = () => {

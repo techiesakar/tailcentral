@@ -21,7 +21,7 @@ export const ScrollItems = ({ navItems }: any) => {
           setQueryString(e.target.value);
         }}
         placeholder="Filter..."
-        className="focus-visible:ring-0 focus-visible:outline-0 border-x-0 text-base bg-gray-100 h-14  px-3"
+        className="block focus-visible:ring-0 focus-visible:outline-0 border-r-0 focus-visible:ring-offset-0 border-x-0 text-base bg-gray-100 h-[64px]  px-3"
       />
       {filteredItems && (
         <ScrollArea className="h-full  w-full rounded-md">

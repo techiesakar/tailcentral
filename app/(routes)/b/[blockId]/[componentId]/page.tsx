@@ -1,8 +1,10 @@
 import React from "react";
 import client from "@/app/utils/db";
-import CodeHighlighter from "@/components/pages/component/code-highlighter";
+import ShowCode from "./_components/show-code";
+import ComponentHeader from "./_components/component-header";
 type ParamsType = {
   params: {
+    blockId: string;
     componentId: string;
   };
 };
@@ -14,9 +16,15 @@ const SingleComponentPage = async ({ params }: ParamsType) => {
     },
   });
   return (
-    <div>
-      <CodeHighlighter code={fetchComponent?.code} />
-    </div>
+    <>
+      <ComponentHeader
+        title="Preview"
+        code={fetchComponent?.code}
+        blockID={params?.blockId}
+      />
+
+      <ShowCode code={fetchComponent?.code} />
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import CodeSkeleton from "@/components/skeleton/code-snippet";
+import { CodeSkeleton } from "@/components/skeleton/components-gallery";
 
 const ComponentLoading = () => {
   return <CodeSkeleton />;

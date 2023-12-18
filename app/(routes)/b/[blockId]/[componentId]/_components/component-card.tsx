@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 
 type CardType = {
   title?: string | null | undefined;
@@ -16,7 +15,6 @@ type BlockProps = {
   card: CardType;
 };
 export const ComponentCard = ({ card }: BlockProps) => {
-  const router = useRouter();
   const [copied, setCopied] = useState(false);
   const onCopy = () => {
     navigator.clipboard.writeText(card.code);
@@ -39,7 +37,9 @@ export const ComponentCard = ({ card }: BlockProps) => {
       </div>
 
       <div className="bottom border-x-0 border-b-0 bg-white flex items-center justify-end border h-14">
-        <Eye className="h-14 border-l text-gray-400 cursor-pointer hover:text-indigo-500 transition-all duration-300 w-14  p-4" />
+        <Link href={`/b/Banner/` + card.id + "?preview=true"}>
+          <Eye className="h-14 border-l text-gray-400 cursor-pointer hover:text-indigo-500 transition-all duration-300 w-14  p-4" />
+        </Link>
         <Link href={`/b/Banner/` + card.id}>
           <Code className="h-14 border-l text-gray-400 cursor-pointer  hover:text-indigo-500 transition-all duration-300 w-14  p-4" />
         </Link>
