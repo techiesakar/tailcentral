@@ -1,5 +1,5 @@
 import client from "@/app/utils/db";
-import { ComponentCard } from "@/components/pages/component/component-card";
+import { ComponentCard } from "@/app/(routes)/b/[blockId]/[componentId]/_components/component-card";
 import React from "react";
 
 type ParamsType = {

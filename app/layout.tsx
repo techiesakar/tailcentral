@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
+import "./tailwind.css";
 
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { SessionProvider } from "next-auth/react";
