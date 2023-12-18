@@ -8,7 +8,6 @@ type ParamsType = {
 };
 
 const SingleComponentPage = async ({ params }: ParamsType) => {
-  console.log(params.componentId, "This is params");
   const fetchComponent = await client.component.findUnique({
     where: {
       id: params.componentId,
