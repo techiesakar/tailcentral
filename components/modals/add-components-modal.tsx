@@ -1,10 +1,10 @@
 "use client";
 import { z } from "zod";
-import { useModal } from "@/hooks/use-modal-store";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useModal } from "@/hooks/use-modal-store";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 
 import {
   Dialog,
@@ -25,7 +25,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createBlock, createComponent, findAllBlocks } from "@/app/action";
+import { createComponent, findAllBlocks } from "@/app/action";
 import { ComponentSchema } from "@/types/schema";
 import { Textarea } from "../ui/textarea";
 import {
@@ -44,17 +44,25 @@ type BlockItemType = {
 };
 const AddComponentModal = () => {
   const router = useRouter();
-  const [allBlocks, setAllBlocks] = useState<BlockItemType[]>([]);
   const { isOpen, onClose, type } = useModal();
+  const [blocks, setAllBlocks] = useState<BlockItemType[]>([])
   const isModalOpen = isOpen && type === "addComponent";
-  const [message, setMessage] = useState("");
+
   useEffect(() => {
-    const fetchAllBlocks = async () => {
-      const navItems = await findAllBlocks();
-      setAllBlocks(navItems);
+    const fetchData = async () => {
+      try {
+        const fetchAllBlocks = await findAllBlocks();
+        setAllBlocks(fetchAllBlocks);
+      } catch (error) {
+        console.error(error);
+        setAllBlocks([]);
+      }
     };
-    fetchAllBlocks();
-  }, []);
+
+    if (isModalOpen) {
+      fetchData();
+    }
+  }, [isModalOpen]);
 
   const form = useForm<z.infer<typeof ComponentSchema>>({
     resolver: zodResolver(ComponentSchema),
@@ -68,7 +76,6 @@ const AddComponentModal = () => {
   const onSubmit = async (values: z.infer<typeof ComponentSchema>) => {
     try {
       await createComponent(values);
-      // handleClose();
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -77,13 +84,10 @@ const AddComponentModal = () => {
 
   const handleClose = () => {
     form.reset();
-    setMessage("");
     onClose();
   };
 
-  const handleInputChange = () => {
-    setMessage("");
-  };
+
 
   if (isModalOpen) {
     return (
@@ -113,10 +117,9 @@ const AddComponentModal = () => {
                         {...field}
                         onChange={(e) => {
                           field.onChange(e);
-                          handleInputChange();
                         }}
                       />
-                    </FormControl>{" "}
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -142,7 +145,7 @@ const AddComponentModal = () => {
                           <SelectGroup>
                             <SelectLabel>Blocks</SelectLabel>
 
-                            {allBlocks.map((item) => (
+                            {blocks.map((item) => (
                               <SelectItem
                                 key={item.id}
                                 value={item.id}
@@ -172,7 +175,6 @@ const AddComponentModal = () => {
                         {...field}
                         onChange={(e) => {
                           field.onChange(e);
-                          handleInputChange();
                         }}
                       />
                     </FormControl>
@@ -188,9 +190,9 @@ const AddComponentModal = () => {
         </DialogContent>
       </Dialog>
     );
-  } else {
-    return null;
   }
+  return null;
+
 };
 
 export default AddComponentModal;
