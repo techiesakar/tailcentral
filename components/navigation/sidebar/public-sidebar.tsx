@@ -6,12 +6,12 @@ import client from "@/app/utils/db";
 
 import { ScrollItems } from "./public-scroll-items";
 
-const Sidebar = async ({ className }: { className?: string }) => {
+const Sidebar = async () => {
   const navItems = await client.block.findMany({
     include: {
       components: {
         select: {
-          id: true,
+          blockSlug: true,
         },
       },
     },

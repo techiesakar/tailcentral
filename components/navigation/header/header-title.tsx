@@ -3,17 +3,16 @@ import { usePathname } from "next/navigation";
 
 export const HeaderTitle = () => {
   const pathName = usePathname();
-  console.log(pathName);
-  const slugTitle = pathName.split("/").pop();
-  const formattedTitle = slugTitle?.split("-").join(" ");
-  const showTitle = !pathName.startsWith("/b/Banner/");
+  // Filtering BlockTitle
+  const BlockTitle = pathName.split("/b/")[1]?.split("/")[0]?.split("-")?.join(" ")
 
-  if (showTitle) {
+  if (BlockTitle) {
     return (
       <h1 className="text-lg capitalize">
-        {formattedTitle || "Blocks"} {}
+        {BlockTitle || "Blocks"}
       </h1>
     );
   }
-  return null;
-};
+  return null
+}
+

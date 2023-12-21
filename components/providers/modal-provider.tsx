@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import AddBlockModal from "../modals/add-block-modal";
-import AddComponentModal from "../modals/add-components-modal";
+import AddBlockModal from "@/components/modals/add-block-modal";
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
@@ -15,7 +14,6 @@ export const ModalProvider = () => {
   return (
     <>
       <AddBlockModal />
-      <AddComponentModal />
     </>
   );
 };

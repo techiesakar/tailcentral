@@ -20,5 +20,7 @@ export type BlockType = {
 export type ComponentType = {
   title: string;
   code: string;
-  blockId: string;
+  blockSlug: string;
+  darkThumb: string;
+  lightThumb: string
 };

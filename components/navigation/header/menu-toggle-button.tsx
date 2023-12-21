@@ -1,5 +1,4 @@
 "use client";
-import { useMenuContext } from "@/components/providers/menu-context";
 import { useMenuToggle } from "@/hooks/use-menu-toggle-store";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
