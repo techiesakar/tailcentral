@@ -3,7 +3,6 @@ import { usePathname } from "next/navigation";
 
 export const HeaderTitle = () => {
   const pathName = usePathname();
-  // Filtering BlockTitle
   const BlockTitle = pathName.split("/b/")[1]?.split("/")[0]?.split("-")?.join(" ")
 
   if (BlockTitle) {
