@@ -3,7 +3,7 @@ import client from "@/app/utils/db";
 import ShowCode from "../_components/show-code";
 import ComponentHeader from "../_components/component-header";
 import { convertHtmlToJsx } from "@/hooks/use-html-jsx";
-
+import "./component.css"
 type ParamsType = {
   params: {
     blockSlug: string;
