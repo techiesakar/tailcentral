@@ -13,12 +13,12 @@ export const config = {
     authorized({ request, auth }) {
       const { pathname } = request.nextUrl;
       if (
-        pathname.startsWith("/private") &&
+        pathname.startsWith("/add") &&
         auth?.user?.email !== "techiesakar@gmail.com"
       ) {
         return NextResponse.redirect(new URL("/", request.url));
       }
-      if (pathname === "/middleware-example") return !!auth;
+      if (pathname === "/add") return !!auth;
       return true;
     },
   },
