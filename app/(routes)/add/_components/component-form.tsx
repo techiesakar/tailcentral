@@ -33,7 +33,6 @@ type BlockItemType = {
 
 
 export default function ComponentForm() {
-    const [imageUrl, setImageUrl] = useState("")
 
     const router = useRouter();
 
@@ -76,7 +75,6 @@ export default function ComponentForm() {
     };
     return (
         <Form {...form}>
-            {imageUrl.length >= 6 && <img src={imageUrl} alt="hello" height={400} width={400} className="h-10 w-10" />}
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-4 mt-3"

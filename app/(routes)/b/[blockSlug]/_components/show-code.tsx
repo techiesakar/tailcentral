@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import parse from 'html-react-parser';
-import "@/app/hey.css";
+import "./component.css";
 import { convertHtmlToJsx } from "@/hooks/use-html-jsx";
 
 
