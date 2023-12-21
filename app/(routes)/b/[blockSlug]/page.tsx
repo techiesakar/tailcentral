@@ -1,7 +1,6 @@
 import client from "@/app/utils/db";
 import React from "react";
 import { ComponentCard } from "./_components/component-card";
-import { NotFound } from "@/components/common/404";
 
 type ParamsType = {
   params: {
