@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { FaGithub, FaGoogle } from "react-icons/fa";
-
 import { signIn } from "@/auth";
+import { FaGithub, FaGoogle } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+
 
 const Providers = [
   {

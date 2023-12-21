@@ -8,17 +8,15 @@ datasource db {
 }
 
 model Component {
-  id         String   @id @default(cuid())
+  id         Int      @id @default(autoincrement())
   title      String?
   code       String
-  blackThumb String?
+  darkThumb  String?
   lightThumb String?
-  htmlCode   String?
-  jsxCode    String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  blockId    String
-  block      Block    @relation(fields: [blockId], references: [id])
+  blockSlug  String
+  block      Block    @relation(fields: [blockSlug], references: [slug])
 }
 
 model Block {

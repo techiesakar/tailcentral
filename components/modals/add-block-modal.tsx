@@ -1,10 +1,10 @@
 "use client";
 import { z } from "zod";
-import { useModal } from "@/hooks/use-modal-store";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+
+import { useModal } from "@/hooks/use-modal-store";
 
 import {
   Dialog,
@@ -16,8 +16,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 import {
   Form,
   FormControl,
@@ -26,6 +27,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import { createBlock } from "@/app/action";
 import { BlockSchema } from "@/types/schema";
 
@@ -34,7 +36,6 @@ const AddBlockModal = () => {
 
   const { isOpen, onClose, type } = useModal();
   const isModalOpen = isOpen && type === "addBlock";
-  const [message, setMessage] = useState("");
 
   const form = useForm<z.infer<typeof BlockSchema>>({
     resolver: zodResolver(BlockSchema),
@@ -45,9 +46,7 @@ const AddBlockModal = () => {
 
   const onSubmit = async (values: z.infer<typeof BlockSchema>) => {
     try {
-      console.log(values);
       const result = await createBlock(values);
-      setMessage(result.message);
       handleClose();
       router.refresh();
     } catch (error) {
@@ -57,13 +56,10 @@ const AddBlockModal = () => {
 
   const handleClose = () => {
     form.reset();
-    setMessage("");
     onClose();
   };
 
-  const handleInputChange = () => {
-    setMessage("");
-  };
+
 
   if (isModalOpen) {
     return (
@@ -96,7 +92,6 @@ const AddBlockModal = () => {
                         {...field}
                         onChange={(e) => {
                           field.onChange(e);
-                          handleInputChange();
                         }}
                       />
                     </FormControl>

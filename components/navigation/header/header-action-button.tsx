@@ -1,37 +1,23 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useModal } from "@/hooks/use-modal-store";
+
+import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
-import Link from "next/link";
+import { useModal } from "@/hooks/use-modal-store";
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export const ActionButton = () => {
   const { onOpen } = useModal();
-
+  const router = useRouter()
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Plus className="text-gray-500 hover:bg-slate-300 transition-all duration-200 p-2 h-10  w-10 bg-slate-200 rounded-full  cursor-pointer" />
-      </PopoverTrigger>
-      <PopoverContent className="mr-2 mt-2  flex flex-col p-0 transition-all">
-        <div
-          className="px-4 pt-4 hover:text-sky-600 cursor-pointer"
-          onClick={() => onOpen("addBlock")}
-        >
-          Add Block
-        </div>
-
-        <div
-          className="px-4 py-4 hover:text-sky-600 cursor-pointer"
-          onClick={() => onOpen("addComponent")}
-        >
-          Add Component
-        </div>
-      </PopoverContent>
-    </Popover>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Plus className="w-8 h-8" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent sideOffset={14} className="mr-4 w-[200px] p-0">
+        <DropdownMenuItem onClick={() => onOpen("addBlock")} className="border-b transition-all duration-50 border-gray-100 hover:bg-gray-50 cursor-pointer p-3">Add Block</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/add")} className="cursor-pointer transition-all duration-50 p-3 hover:bg-gray-50">Add Component</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };

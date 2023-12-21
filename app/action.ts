@@ -4,7 +4,6 @@ import { BlockType, ComponentType } from "@/types/definitions";
 import { z } from "zod";
 import slugify from "slugify";
 import client from "./utils/db";
-import { revalidatePath } from "next/cache";
 
 export async function findAdmin() {
   const session = await auth();
@@ -22,7 +21,7 @@ const BlockSchema = z.object({
 });
 
 const ComponentSchema = z.object({
-  blockId: z.string(),
+  blockSlug: z.string(),
   title: z
     .string()
     .min(3, {
@@ -31,6 +30,8 @@ const ComponentSchema = z.object({
     .max(20),
 
   code: z.string(),
+  darkThumb: z.string(),
+  lightThumb: z.string()
 });
 export async function findAllBlocks() {
   try {
@@ -100,12 +101,11 @@ export async function createComponent(values: ComponentType) {
       throw new Error("Only Admin can Create Block");
     }
     const validatedData = ComponentSchema.parse(values);
-    const { blockId, ...componentData } = validatedData;
-    console.log(blockId);
+    const { blockSlug, ...componentData } = validatedData;
     const result = await client.component.create({
       data: {
         ...componentData,
-        block: { connect: { id: blockId } },
+        block: { connect: { slug: blockSlug } },
       },
     });
     return result;

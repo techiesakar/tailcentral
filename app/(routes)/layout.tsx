@@ -1,14 +1,14 @@
 import PageWrapper from "@/components/common/page-wrapper";
 import { Header } from "@/components/navigation/header/header";
-import Sidebar from "@/components/navigation/sidebar/public/public-sidebar";
+import Sidebar from "@/components/navigation/sidebar/public-sidebar";
 
 const BlockLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <PageWrapper header={<Header />} sidebar={<Sidebar />}>
-        {children}
-      </PageWrapper>
-    </>
+
+    <PageWrapper header={<Header />} sidebar={<Sidebar />}>
+      {children}
+    </PageWrapper>
+
   );
 };
 
